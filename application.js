@@ -14,41 +14,81 @@ function computerPlay() {
     }
 }
 
+function playerScore() {
+    _playerScore++;
+
+}
+
+function computerScore() {
+    _computerScore++;
+}
+
 // Play a round of Rock Paper Scissors using player and computer outputs
 function playRound(playerSelection, computerSelection) {
     if (computerSelection == playerSelection) {
-        return "Game tie";
+        playerScore();
+        computerScore();
+        return "You and the computer tied.";
     } 
     else if (computerSelection == "rock" && playerSelection == "paper") {
-        return "Paper beats rock, you win!";
+        playerScore();
+        return "Paper beats rock!";
     }
     else if (computerSelection == "rock" && playerSelection == "scissors") {
-        return "Rock beats scissors, you lose!";
+        computerScore();
+        return "Rock beats scissors.";
     }
     else if (computerSelection == "paper" && playerSelection == "rock") {
-        return "Paper beats rock, you lose!";
+        computerScore();
+        return "Paper beats rock.";
     }
     else if (computerSelection == "paper" && playerSelection == "scissors") {
-        return "Scissors beat paper, you win!";
+        playerScore();
+        return "Scissors beat paper!";
     }
     else if (computerSelection == "scissors" && playerSelection == "rock") {
-        return "Rock beats scissors, you win!";
+        playerScore();
+        return "Rock beats scissors!";
     }
     else if (computerSelection == "scissors" && playerSelection == "paper") {
-        return "Scissors beat paper, you lose!";
+        computerScore();
+        return "Scissors beat paper.";
     } else {
-        return "Invaild input."
+        computerScore();
+        return "Invaild input. Computer gets +1 point.";
+    }
+}
+
+function tallyScore() {
+    if (_playerScore == _computerScore) {
+        console.log("Game tied.");
+    } else if (_playerScore > _computerScore) {
+        console.log("You win!");
+    } else if (_playerScore < _computerScore) {
+        console.log("Computer wins.");
     }
 }
 
 function game() {
+    // Generate player choice
+    const playerSelection = prompt("Rock, Paper, or Scissors?").toLowerCase();;
+    // Get computer choice
+    const computerSelection = computerPlay();
+
     // Output the results of the game
     console.log(playRound(playerSelection, computerSelection));
 }
 
-// Generate player choice
-const playerSelection = prompt("Rock, Paper, or Scissors?").toLowerCase();;
-// Get computer choice
-const computerSelection = computerPlay();
+let _playerScore = 0;
+let _computerScore = 0;
 
 game();
+game();
+game();
+game();
+game();
+tallyScore();
+
+console.log(`Total score 
+Computer: ${_computerScore}  
+Player: ${_playerScore}`);
