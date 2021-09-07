@@ -2,15 +2,16 @@
 function computerPlay() {
     let selection = Math.floor(Math.random() * 3);
 
-    if (selection == 0) {
-        console.log("Computer throws rock!");
-        return "rock";
-    } else if (selection == 1) {
-        console.log("Computer throws paper!");
-        return "paper";
-    } else if (selection == 2) {
-        console.log("Computer throws scissors!");
-        return "scissors";
+    switch (selection) {
+        case 0:
+            console.log("Computer throws rock!");
+            return "rock";
+        case 1:
+            console.log("Computer throws paper!");
+            return "paper";
+        case 2:
+            console.log("Computer throws scissors!");
+            return "scissors";
     }
 }
 
@@ -26,8 +27,6 @@ function computerScore() {
 // Play a round of Rock Paper Scissors using player and computer outputs
 function playRound(playerSelection, computerSelection) {
     if (computerSelection == playerSelection) {
-        playerScore();
-        computerScore();
         return "You and the computer tied.";
     } 
     else if (computerSelection == "rock" && playerSelection == "paper") {
