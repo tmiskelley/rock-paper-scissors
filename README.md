@@ -1,2 +1,2 @@
 # rock-paper-scissors
-Basic rock paper scissor game program
+A basic rock paper scissor game program
