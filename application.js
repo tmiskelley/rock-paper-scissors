@@ -4,13 +4,10 @@ function computerPlay() {
 
     switch (selection) {
         case 0:
-            console.log("Computer throws rock!");
             return "rock";
         case 1:
-            console.log("Computer throws paper!");
             return "paper";
         case 2:
-            console.log("Computer throws scissors!");
             return "scissors";
     }
 }
@@ -26,67 +23,131 @@ function computerScore() {
 
 // Play a round of Rock Paper Scissors using player and computer outputs
 function playRound(playerSelection, computerSelection) {
+
+    const div = document.getElementById('results');
+    const para = document.createElement('p');
+    const score = document.createElement('p');
+    score.style.color = 'blue';
+    
     if (computerSelection == playerSelection) {
-        return "You and the computer tied.";
+        para.textContent = "You and the computer tied.";
+        div.appendChild(para);
+        score.textContent = `you: ${_playerScore} computer: ${_computerScore}`;
+        div.appendChild(score);
     } 
     else if (computerSelection == "rock" && playerSelection == "paper") {
         playerScore();
-        return "Paper beats rock!";
+        para.textContent = "Paper beats rock!";
+        para.style.color = 'green';
+        div.appendChild(para);
+        score.textContent = `you: ${_playerScore} computer: ${_computerScore}`;
+        div.appendChild(score);
     }
     else if (computerSelection == "rock" && playerSelection == "scissors") {
         computerScore();
-        return "Rock beats scissors.";
+        para.textContent = "Rock beats scissors.";
+        para.style.color = 'red';
+        div.appendChild(para);
+        score.textContent = `you: ${_playerScore} computer: ${_computerScore}`;
+        div.appendChild(score);
     }
     else if (computerSelection == "paper" && playerSelection == "rock") {
         computerScore();
-        return "Paper beats rock.";
+        para.textContent = "Paper beats rock.";
+        para.style.color = 'red';
+        div.appendChild(para);
+        score.textContent = `you: ${_playerScore} computer: ${_computerScore}`;
+        div.appendChild(score);
     }
     else if (computerSelection == "paper" && playerSelection == "scissors") {
         playerScore();
-        return "Scissors beat paper!";
+        para.textContent = "Scissors beat paper!";
+        para.style.color = 'green';
+        div.appendChild(para);
+        score.textContent = `you: ${_playerScore} computer: ${_computerScore}`;
+        div.appendChild(score);
     }
     else if (computerSelection == "scissors" && playerSelection == "rock") {
         playerScore();
-        return "Rock beats scissors!";
+        para.textContent = "Rock beats scissors!";
+        para.style.color = 'green';
+        div.appendChild(para);
+        score.textContent = `you: ${_playerScore} computer: ${_computerScore}`;
+        div.appendChild(score);
     }
     else if (computerSelection == "scissors" && playerSelection == "paper") {
         computerScore();
-        return "Scissors beat paper.";
-    } else {
-        computerScore();
-        return "Invaild input. Computer gets +1 point.";
+        para.textContent = "Scissors beat paper.";
+        para.style.color = 'red';
+        div.appendChild(para);
+        score.textContent = `you: ${_playerScore} computer: ${_computerScore}`;
+        div.appendChild(score);
     }
 }
 
 function tallyScore() {
-    if (_playerScore == _computerScore) {
-        console.log("Game tied.");
-    } else if (_playerScore > _computerScore) {
-        console.log("You win!");
-    } else if (_playerScore < _computerScore) {
-        console.log("Computer wins.");
+
+    if (!executed) {
+        executed = true;
+
+        const div = document.getElementById('results');
+        const winner = document.createElement('p');
+
+        if (_playerScore == _computerScore) {
+            winner.textContent = "Game tied";
+            div.appendChild(winner);
+        } else if (_playerScore > _computerScore) {
+            winner.textContent = "You win!";
+            winner.style.color = 'gold';
+            div.appendChild(winner);
+        } else if (_playerScore < _computerScore) {
+            winner.textContent = "Computer wins.";
+            winner.style.color = '#cd7f32';
+            div.appendChild(winner);
+        }
     }
 }
 
 function game() {
-    // Generate player choice
-    const playerSelection = prompt("Rock, Paper, or Scissors?").toLowerCase();;
-    // Get computer choice
-    const computerSelection = computerPlay();
 
-    // Output the results of the game
-    console.log(playRound(playerSelection, computerSelection));
+    const rock =  document.getElementById("rock");
+    const paper =  document.getElementById("paper");
+    const scissors =  document.getElementById("scissors");
+
+    rock.addEventListener('click', function play() {
+        if(_playerScore == 5 || _computerScore == 5) {
+            tallyScore();
+            rock.removeEventListener('click', play);
+        } else {
+            let computer = computerPlay();
+            playRound("rock", computer);
+        }
+    });
+
+    paper.addEventListener('click', function play() {
+        if(_playerScore == 5 || _computerScore == 5) {
+            tallyScore();
+            paper.removeEventListener('click', play);
+        } else {
+            let computer = computerPlay();
+            playRound("paper", computer);
+        }
+    });
+
+    scissors.addEventListener('click', function play() {
+        if(_playerScore == 5 || _computerScore == 5) {
+            tallyScore();
+            scissors.removeEventListener('click', play);
+        } else {
+            let computer = computerPlay();
+            playRound("scissors", computer);
+        }
+    });
 }
+
+let executed = false;
 
 let _playerScore = 0;
 let _computerScore = 0;
 
-for (let i = 0; i < 5; i++) {
-    game();
-}
-
-tallyScore();
-
-console.log(`Total score 
-Computer: ${_computerScore}  
-Player: ${_playerScore}`);
+game();
