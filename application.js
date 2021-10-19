@@ -81,11 +81,10 @@ function game() {
 let _playerScore = 0;
 let _computerScore = 0;
 
-game();
-game();
-game();
-game();
-game();
+for (let i = 0; i < 5; i++) {
+    game();
+}
+
 tallyScore();
 
 console.log(`Total score 
